@@ -40,8 +40,19 @@ jobs:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
+        continue-on-error: true # Permito continuar si encuentra errores
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: >
+            --severity-threshold=high
+            --all-projects
+            --sarif-file-output=snyk-code.sarif
+      - name: Upload SARIF file
+        #if: always()
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk-code.sarif  
           
   GitGuardian:
     name: GitGuardian scan
