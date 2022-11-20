@@ -13,7 +13,7 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "walter suarez" #Must be unique in Heroku
+          heroku_app_name: "suarez-walter" #Must be unique in Heroku
           heroku_email: "wrs200@gmail.com"
           remote_branch: "master"
           usedocker: true
