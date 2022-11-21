@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read 
 
 jobs:
   njsscan:
@@ -34,15 +35,25 @@ jobs:
         sarif_file: results.sarif
 
 
-  snyk:
+  sonar:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        continue-on-error: true # Permito continuar si encuentra errores
+      - uses: actions/checkout@v3
+
+      - name: SonarQube Scan
+        continue-on-error: true
+        uses: SonarSource/sonarcloud-github-action@de2e56b42aa84d0b1c5b622644ac17e505c9a049
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+        with:
+          projectBaseDir: . 
+          args: >
+            -Dsonar.projectKey=${{ github.event.repository.name}}
+            -Dsonar.projectName=${{ github.event.repository.name}}  
+            -Dsonar.source=. 
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.organization=nico14
           
   GitGuardian:
     name: GitGuardian scan
