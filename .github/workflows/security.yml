@@ -70,7 +70,7 @@ jobs:
           with:
             ref: master
         - name: "ZAP API Scan"
-          uses: zaproxy/action-api-scan@v0.1.0
+          uses: zaproxy/action-full-scan@v0.4.0
           with:
             token: ${{ secrets.GIT_TOKEN }}
             docker_name: 'owasp/zap2docker-stable'
