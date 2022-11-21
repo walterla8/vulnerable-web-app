@@ -53,7 +53,7 @@ jobs:
             -Dsonar.projectName=${{ github.event.repository.name}}  
             -Dsonar.source=. 
             -Dsonar.sourceEncoding=UTF-8
-            -Dsonar.organization=${{ github.event.repository.name}}  
+            -Dsonar.organization=nico14
           
   GitGuardian:
     name: GitGuardian scan
