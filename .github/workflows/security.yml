@@ -37,12 +37,14 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         continue-on-error: true # Permito continuar si encuentra errores
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --file=package.json
           
   GitGuardian:
     name: GitGuardian scan
