@@ -88,4 +88,5 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
+          image: ./Dockerfile
           args: --file=Dockerfile
