@@ -84,7 +84,7 @@ jobs:
     steps:
       - name: Prepare
         id: prep
-        run: |
+      - run: |
           OWNER=nico14
           REPO=vulnerable-web-app
           TAGS_INICIAL="${OWNER}/${REPO}"
@@ -92,7 +92,7 @@ jobs:
       - name: Checkout
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
+        uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
