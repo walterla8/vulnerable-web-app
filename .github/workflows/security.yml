@@ -88,7 +88,8 @@ jobs:
        run: |
           OWNER=nico14
           REPO=vulnerable-web-app
-          TAGS_INICIAL="${OWNER}/${REPO}"
+          VERSION=${{ github.sha }}
+          TAGS_INICIAL="${OWNER}/${REPO}:${VERSION}"
           echo ::set-output name=tags_inicial::${TAGS_INICIAL}
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
@@ -97,8 +98,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ steps.prep.outputs.tags_inicial }}
-          args:
-            --file=Dockerfile
+          args: --file=Dockerfile
       - name: upload Anchore scan SARIF report
         uses: github/codeql-action/upload-sarif@v2
         with:
