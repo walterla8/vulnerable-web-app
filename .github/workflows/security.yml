@@ -82,12 +82,21 @@ jobs:
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
     runs-on: ubuntu-latest
     steps:
+      - name: Prepare
+        id: prep
+        run: |
+          OWNER=nico14
+          REPO=vulnerable-web-app
+          TAGS_INICIAL="${OWNER}/${REPO}"
+          echo ::set-output name=tags_inicial::${TAGS_INICIAL}
+      - name: Checkout
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/docker@14818c4695ecc4045f33c9cee9e795a788711ca4
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
+          image: ${{ steps.prep.outputs.tags_inicial }}
           args:
             --file=Dockerfile
       - name: upload Anchore scan SARIF report
